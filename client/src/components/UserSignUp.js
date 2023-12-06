@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
+import { apiHelper } from '../utils/apiHelper';
 
 const UserSignUp = () => {
     const navigate = useNavigate();
@@ -24,15 +25,7 @@ const UserSignUp = () => {
             password: password.current.value
         }
 
-        const fetchOptions = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: user
-        }
-
-        const response = await fetch('http://localhost:5000/api/users', fetchOptions);
+        const response = await apiHelper('users', 'POST', user);
         try {
             if (response.status === 200) {
                 console.log(`${user.firstName} is successfully signed up and authenticated.`);

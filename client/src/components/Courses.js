@@ -1,17 +1,11 @@
 import { useState, useEffect } from 'react';
+import { apiHelper } from '../utils/apiHelper';
 
 const Courses = () => {
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        const fetchOptions = {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            }
-        };
-
-        fetch("http://localhost:5000/api/courses", fetchOptions)
+        apiHelper('/courses', 'GET', '')
             .then(response => response.json())
             .then(responseData => setCourses(responseData))
     }, [])

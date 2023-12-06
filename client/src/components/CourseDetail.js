@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { apiHelper } from '../utils/apiHelper';
 
 const CourseDetail = () => {
     const { id } = useParams();
@@ -7,28 +8,11 @@ const CourseDetail = () => {
 
     useEffect(() => {
         const fetchCourse = async (id) => {
-            const fetchOptions = {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8"
-                }
-            }
-
-            await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions)
+            await apiHelper(`/courses/${id}`, 'GET', '')
                 .then(response => response.json())
-                .then(responseData => {
-                    console.log("Response Data: ", responseData);
-                    setCourse(responseData)
-                    console.log(course);
-                })
-
-
-            console.log("Course State: ", course);
+                .then(responseData => setCourse(responseData));
         }
-
         fetchCourse(id);
-        console.log("Outside course: ", course);
-
     }, []);
 
     // let courseMaterialsList;
