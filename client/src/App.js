@@ -28,7 +28,6 @@ export default App;
 
 
 //TODO:
-// fix CourseDetail component
 // add CreateCourse component
 // add UpdateCourse component
 // consider refactoring to create a helper function for api calls

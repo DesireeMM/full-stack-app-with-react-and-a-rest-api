@@ -5,7 +5,7 @@ const CourseDetail = () => {
     const { id } = useParams();
     const [course, setCourse] = useState(null);
 
-    useEffect( () => {
+    useEffect(() => {
         const fetchCourse = async (id) => {
             const fetchOptions = {
                 method: "GET",
@@ -13,7 +13,7 @@ const CourseDetail = () => {
                     "Content-Type": "application/json; charset=utf-8"
                 }
             }
-    
+
             await fetch(`http://localhost:5000/api/courses/${id}`, fetchOptions)
                 .then(response => response.json())
                 .then(responseData => {
@@ -38,25 +38,25 @@ const CourseDetail = () => {
     //     console.log(typeof materialsList)
     //     // courseMaterialsList = materialsList.map(material => <li>{material}</li>);
     // }
-
-    return (
-        <>
-            <div className="actions--bar">
-                <div className="wrap">
-                    <a className="button" href={`/courses/${id}/update`}>Update Course</a>
-                    <a className="button" href="/">Delete Course</a>
-                    <a className="button button-secondary" href="/">Return to List</a>
+    if (course) {
+        return (
+            <>
+                <div className="actions--bar">
+                    <div className="wrap">
+                        <a className="button" href={`/courses/${id}/update`}>Update Course</a>
+                        <a className="button" href="/">Delete Course</a>
+                        <a className="button button-secondary" href="/">Return to List</a>
+                    </div>
                 </div>
-            </div>
-            <div className="wrap">
-                <h2>Course Detail</h2>
-                <form>
-                    {/* <div>
+                <div className="wrap">
+                    <h2>Course Detail</h2>
+                    <form>
+                        <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
                         <p>{course.description}</p>
-                    </div> */}
-                    {/* <div>
+                    </div>
+                        <div>
                         {course.estimatedTime ?
                             <>
                                 <h3 className="course--detail--title">Estimated Time</h3>
@@ -68,16 +68,19 @@ const CourseDetail = () => {
                         {course.materialsNeeded ?
                             <>
                                 <h3 className="course--detail--title">Materials Needed</h3>
-                                <ul className="course--detail--list">{courseMaterialsList}</ul>
+                                {/* <ul className="course--detail--list">{courseMaterialsList}</ul> */}
                             </>
                             :
                             <></>
                         }
-                    </div> */}
-                </form>
-            </div>
-        </>
-    );
+                    </div>
+                    </form>
+                </div>
+            </>
+        );
+    }
+
+    return;
 };
 
 export default CourseDetail;
