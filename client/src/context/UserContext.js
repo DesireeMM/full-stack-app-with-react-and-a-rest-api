@@ -8,12 +8,13 @@ export const UserProvider = (props) => {
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
 
     const signIn = async (credentials) => {
+        const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
+
         const fetchOptions = {
             method: "GET",
             headers: {
-                "Content-Type": "application/json; charset=utf-8"
-            },
-            body: credentials
+                "Authorization": `Basic ${encodedCredentials}`
+            }
         }
         const response = await fetch("http://localhost:5000/users", fetchOptions);
 
