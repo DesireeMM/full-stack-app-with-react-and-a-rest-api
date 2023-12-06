@@ -8,6 +8,7 @@ import CourseDetail from './components/CourseDetail';
 import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
+import CreateCourse from './components/CreateCourse';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Courses />} />
       <Route path="/courses/:id" element={<CourseDetail />} />
+      <Route path="/courses/:id/update" element={<CreateCourse />} />
       <Route path="/signup" element={<UserSignUp />} />
       <Route path="/signin" element={<UserSignIn />} />
       <Route path="/signout" element={<UserSignOut />} />

@@ -25,7 +25,7 @@ const UserSignUp = () => {
             password: password.current.value
         }
 
-        const response = await apiHelper('users', 'POST', user);
+        const response = await apiHelper('/users', 'POST', user);
         try {
             if (response.status === 200) {
                 console.log(`${user.firstName} is successfully signed up and authenticated.`);
