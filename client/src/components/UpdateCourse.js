@@ -1,38 +1,48 @@
-import { useRef, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import UserContext from '../context/UserContext';
+import { useRef, useContext, useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { apiHelper } from '../utils/apiHelper';
+import UserContext from '../context/UserContext';
 
-const CreateCourse = () => {
+const UpdateCourse = () => {
+    const { id } = useParams();
+    const [course, setCourse] = useState(null);
     const { authUser } = useContext(UserContext);
-    const navigate = useNavigate();
     const [errors, setErrors] = useState([]);
+    const navigate = useNavigate();
 
-    // form refs
-    const courseTitle = useRef(null);
-    const courseDescription = useRef(null);
-    const estimatedTime = useRef(null);
-    const materialsNeeded = useRef(null);
-
+    
+    useEffect(() => {
+        const fetchCourse = async (id) => {
+            await apiHelper(`/courses/${id}`, 'GET', '')
+            .then(response => response.json())
+            .then(responseData => setCourse(responseData));
+        }
+        fetchCourse(id);
+    }, []);
+    
+    // ref values
+    const courseTitle = useRef(course.title);
+    const courseDescription = useRef(course.description);
+    const estimatedTime = useRef(course.estimatedTime);
+    const materialsNeeded = useRef(course.materialsNeeded);
+    
     // event handlers
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
         const courseBody = {
-            title: courseTitle.current.value,
-            description: courseDescription.current.value,
-            estimatedTime: estimatedTime.current.value,
-            materialsNeeded: materialsNeeded.current.value,
-            // userId: authUser.id
+            title: courseTitle,
+            description: courseDescription,
+            estimatedTime,
+            materialsNeeded,
+            userId: authUser.id
         }
 
-        const response = await apiHelper(`/courses`, 'POST', courseBody)
-            .then(response => response.json());
-
+        const response = await apiHelper(`/courses/${id}`, "PUT", courseBody)
         try {
-            if (response.status === 201) {
-                console.log(`${courseTitle.current.value} has been successfully created.`);
-                navigate(`/courses/${response.id}`)
+            if (response.status === 204) {
+                console.log(`${course.title} has been updated successfully.`);
+                navigate(`/courses/${id}`);
             } else if (response.status === 400) {
                 const data = await response.json();
                 setErrors(data.errors);
@@ -41,25 +51,20 @@ const CreateCourse = () => {
             }
         } catch (error) {
             console.log(error);
-            navigate('/error')
-        };
-    };
+            navigate("/error");
+        }
+
+    }
 
     const handleCancel = (evt) => {
         evt.preventDefault();
-        navigate("/")
+        navigate(`/courses/${id}`);
     };
 
-    return (
-        <div className="wrap">
-                <h2>Create Course</h2>
-                {/* <div className="validation--errors">
-                    <h3>Validation Errors</h3>
-                    <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
-                    </ul>
-                </div> */}
+    if (course) {
+        return (
+            <div className="wrap">
+                <h2>Update Course</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>
@@ -79,10 +84,13 @@ const CreateCourse = () => {
                             <textarea id="materialsNeeded" name="materialsNeeded" ref={materialsNeeded}></textarea>
                         </div>
                     </div>
-                    <button class="button" type="submit">Create Course</button><button class="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 </form>
             </div>
-    );
+        );
+    }
+
+    return;
 };
 
-export default CreateCourse;
+export default UpdateCourse;

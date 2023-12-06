@@ -27,7 +27,7 @@ const UserSignUp = () => {
 
         const response = await apiHelper('/users', 'POST', user);
         try {
-            if (response.status === 200) {
+            if (response.status === 201) {
                 console.log(`${user.firstName} is successfully signed up and authenticated.`);
                 await actions.signIn(user);
                 navigate('/');
@@ -52,7 +52,7 @@ const UserSignUp = () => {
         <div className="form--centered">
                 <h2>Sign Up</h2>
                 
-                <form>
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="firstName">First Name</label>
                     <input id="firstName" name="firstName" type="text" ref={firstName} />
                     <label htmlFor="lastName">Last Name</label>
@@ -61,7 +61,7 @@ const UserSignUp = () => {
                     <input id="emailAddress" name="emailAddress" type="email" ref={emailAddress} />
                     <label htmlFor="password">Password</label>
                     <input id="password" name="password" type="password" ref={password} />
-                    <button className="button" type="submit" onSubmit={handleSubmit}>Sign Up</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    <button className="button" type="submit">Sign Up</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 </form>
                 <p>Already have a user account? Click here to <Link to="/signin">sign in</Link>!</p>
             </div>

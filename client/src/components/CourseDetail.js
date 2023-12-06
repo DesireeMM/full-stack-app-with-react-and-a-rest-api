@@ -1,10 +1,11 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { apiHelper } from '../utils/apiHelper';
 
 const CourseDetail = () => {
     const { id } = useParams();
     const [course, setCourse] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCourse = async (id) => {
@@ -22,13 +23,31 @@ const CourseDetail = () => {
     //     console.log(typeof materialsList)
     //     // courseMaterialsList = materialsList.map(material => <li>{material}</li>);
     // }
+
+    const handleDelete = async (evt) => {
+        evt.preventDefault();
+
+        const response = await apiHelper(`/courses/${id}`, "DELETE");
+        try {
+            if (response.status === 204) {
+                console.log(`${course.title} was successfully deleted.`);
+                navigate('/courses');
+            } else {
+                throw new Error()
+            }
+        } catch (error) {
+            console.log(error);
+            navigate('/error')
+        }
+    };
+
     if (course) {
         return (
             <>
                 <div className="actions--bar">
                     <div className="wrap">
                         <a className="button" href={`/courses/${id}/update`}>Update Course</a>
-                        <a className="button" href="/">Delete Course</a>
+                        <a className="button" href={`/courses/${id}`} onClick={handleDelete}>Delete Course</a>
                         <a className="button button-secondary" href="/">Return to List</a>
                     </div>
                 </div>

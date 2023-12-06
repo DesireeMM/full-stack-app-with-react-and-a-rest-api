@@ -9,6 +9,7 @@ import UserSignIn from './components/UserSignIn';
 import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
+import UpdateCourse from './components/UpdateCourse';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
       <Route path="/" element={<Courses />} />
       <Route path="/courses/:id" element={<CourseDetail />} />
       <Route path="/courses/create" element={<CreateCourse />} />
+      <Route path="/courses/:id/update" element={<UpdateCourse />} />
       <Route path="/signup" element={<UserSignUp />} />
       <Route path="/signin" element={<UserSignIn />} />
       <Route path="/signout" element={<UserSignOut />} />
@@ -30,9 +32,6 @@ export default App;
 
 
 //TODO:
-// add CreateCourse component
-// add UpdateCourse component
-// consider refactoring to create a helper function for api calls
 // configure protected routes for /courses/create and /courses/:id/update
 // restrict access to updating and deleting courses
 // add validation errors
