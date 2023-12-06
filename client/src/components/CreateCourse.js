@@ -27,11 +27,12 @@ const CreateCourse = () => {
         }
 
         const response = await apiHelper(`/courses`, 'POST', courseBody)
+            .then(response => response.json());
 
         try {
             if (response.status === 201) {
                 console.log(`${courseTitle.current.value} has been successfully created.`);
-                navigate(`/courses/${id}`)
+                navigate(`/courses/${response.id}`)
             } else if (response.status === 400) {
                 const data = await response.json();
                 setErrors(data.errors);
