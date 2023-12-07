@@ -48,8 +48,14 @@ const CourseDetail = () => {
             <>
                 <div className="actions--bar">
                     <div className="wrap">
+                        { authUser && authUser.id === course.owner.id ? 
+                        <>
                         <a className="button" href={`/courses/${id}/update`}>Update Course</a>
                         <a className="button" href={`/courses/${id}`} onClick={handleDelete}>Delete Course</a>
+                        </>
+                        :
+                        <></>
+                        }
                         <a className="button button-secondary" href="/">Return to List</a>
                     </div>
                 </div>
@@ -59,7 +65,7 @@ const CourseDetail = () => {
                         <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
-                        <p>By {authUser.firstName} {authUser.lastName}</p>
+                        <p>By {course.owner.firstName} {course.owner.lastName}</p>
                         <p>{course.description}</p>
                     </div>
                         <div>

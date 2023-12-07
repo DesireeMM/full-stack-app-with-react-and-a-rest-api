@@ -71,7 +71,7 @@ const UpdateCourse = () => {
                             <label htmlFor="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" defaultValue={course?.title} ref={courseTitle} />
 
-                            <p>By {authUser.firstName} {authUser.lastName}</p>
+                            <p>By {course.owner.firstName} {course.owner.lastName}</p>
 
                             <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" defaultValue={course?.description} ref={courseDescription}></textarea>
