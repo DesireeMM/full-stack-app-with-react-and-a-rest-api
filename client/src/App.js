@@ -1,3 +1,4 @@
+import './styles/reset.css';
 import './styles/global.css';
 import { Route, Routes } from 'react-router-dom';
 
