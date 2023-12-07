@@ -4,6 +4,7 @@ import UserContext from '../context/UserContext';
 import { apiHelper } from '../utils/apiHelper';
 import ErrorsDisplay from './ErrorsDisplay';
 
+// component to render the form used to create new courses
 const CreateCourse = () => {
     const { authUser } = useContext(UserContext);
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const CreateCourse = () => {
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
+        // generate request body
         const courseBody = {
             title: courseTitle.current.value,
             description: courseDescription.current.value,
@@ -27,11 +29,8 @@ const CreateCourse = () => {
             userId: authUser.id
         }
 
-        const response = await apiHelper(`/courses`, 'POST', courseBody, authUser)
-
-        console.log(response);
-
         try {
+            const response = await apiHelper(`/courses`, 'POST', courseBody, authUser)
             if (response.status === 201) {
                 console.log(`${courseTitle.current.value} has been successfully created.`);
                 navigate("/")

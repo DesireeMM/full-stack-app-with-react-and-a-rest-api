@@ -2,18 +2,22 @@ import { useRef, useState, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 
+// component that renders sign in form
 const UserSignIn = () => {
     const navigate = useNavigate();
-    const emailAddress = useRef(null);
-    const password = useRef(null);
+    const location = useLocation();
     const [errors, setErrors] = useState([]);
     const { actions } = useContext(UserContext);
-    const location = useLocation();
+
+    // ref values
+    const emailAddress = useRef(null);
+    const password = useRef(null);
 
     // event handlers
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
+        // preserve route user wanted to access
         let from = "/";
         if (location.state) {
             from = location.state.from;

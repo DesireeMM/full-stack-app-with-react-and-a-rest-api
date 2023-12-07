@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import UserContext from '../context/UserContext';
 import { Navigate } from 'react-router-dom';
 
+// component to handle user sign out
 const UserSignOut = () => {
     const { actions } = useContext(UserContext);
 

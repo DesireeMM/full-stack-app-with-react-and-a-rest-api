@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import { apiHelper } from '../utils/apiHelper';
 
+// home component that renders all courses in the database
 const Courses = () => {
     const [courses, setCourses] = useState([]);
 
+    // fetch courses only once
     useEffect(() => {
         apiHelper('/courses', 'GET', '')
             .then(response => response.json())
             .then(responseData => setCourses(responseData))
     }, [])
 
+    // generate links for each course
     const courseList = courses.map((course) => {
         return (
             <a className="course--module course--link" href={`/courses/${course.id}`} key={course.id}>

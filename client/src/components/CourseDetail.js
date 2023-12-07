@@ -1,24 +1,38 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
+import Markdown from 'react-markdown';
 import { apiHelper } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
-import Markdown from 'react-markdown';
 
+// Component to render individual courses
 const CourseDetail = () => {
     const { id } = useParams();
-    const [course, setCourse] = useState(null);
     const navigate = useNavigate();
     const { authUser } = useContext(UserContext);
+    const [course, setCourse] = useState(null);
 
+    // fetches course once
     useEffect(() => {
-        const fetchCourse = async (id) => {
-            await apiHelper(`/courses/${id}`, 'GET', '')
-                .then(response => response.json())
-                .then(responseData => setCourse(responseData));
+        const fetchCourse = async () => {
+            try {
+                const response = await apiHelper(`/courses/${id}`, 'GET', '');
+                if (response.status === 200) {
+                    const resJSON = await response.json();
+                    setCourse(resJSON);
+                } else if (response.status === 404) {
+                    navigate('/notfound')
+                } else {
+                    throw new Error()
+                }
+            } catch (error) {
+                console.log(error);
+                navigate('/error');
+            }
         }
-        fetchCourse(id);
+        fetchCourse();
     }, []);
 
+    // handles user deleting an owned course
     const handleDelete = async (evt) => {
         evt.preventDefault();
 
@@ -27,6 +41,10 @@ const CourseDetail = () => {
             if (response.status === 204) {
                 console.log(`${course.title} was successfully deleted.`);
                 navigate('/');
+            } else if (response.status === 404) {
+                navigate('/notfound');
+            } else if (response.status === 403) {
+                navigate('/forbidden')
             } else {
                 throw new Error()
             }
@@ -36,6 +54,7 @@ const CourseDetail = () => {
         }
     };
 
+    // if a course has been fetched, render component
     if (course) {
         return (
             <>
@@ -86,7 +105,7 @@ const CourseDetail = () => {
             </>
         );
     }
-
+    
     return;
 };
 

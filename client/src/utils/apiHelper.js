@@ -1,3 +1,4 @@
+// helper function to make fetch requests
 export const apiHelper = (
     path,
     method = 'GET',

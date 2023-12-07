@@ -1,3 +1,4 @@
+// component to display list of validation errors
 const ErrorsDisplay = ({ errors }) => {
     let errorsDisplay = null;
 

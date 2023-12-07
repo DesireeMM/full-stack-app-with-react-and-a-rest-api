@@ -19,11 +19,27 @@ const UpdateCourse = () => {
     
     useEffect(() => {
         const fetchCourse = async (id) => {
-            await apiHelper(`/courses/${id}`, 'GET', '')
-            .then(response => response.json())
-            .then(responseData => setCourse(responseData));
+            try {
+                const response = await apiHelper(`/courses/${id}`, 'GET', '');
+                if (response.status === 200) {
+                    const resJSON = await response.json();
+                    if (resJSON.owner.id !== authUser.id) {
+                        navigate('/forbidden');
+                    } else {
+                        setCourse(resJSON);
+                    }
+                } else if (response.status === 404) {
+                    navigate('/notfound');
+                } else {
+                    throw new Error();
+                }
+            } catch (error) {
+                console.log(error);
+                navigate('/error');
+            }
         }
         fetchCourse(id);
+
     }, []);
     
     
@@ -47,6 +63,10 @@ const UpdateCourse = () => {
             } else if (response.status === 400) {
                 const data = await response.json();
                 setErrors(data.errors);
+            } else if (response.status === 404) {
+                navigate('/notfound');
+            } else if (response.status === 403) {
+                navigate('/forbidden');
             } else {
                 throw new Error();
             }

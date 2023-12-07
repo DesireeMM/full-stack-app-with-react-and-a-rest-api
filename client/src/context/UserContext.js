@@ -2,6 +2,7 @@ import { createContext, useState } from 'react';
 import Cookies from 'js-cookie';
 import { apiHelper } from '../utils/apiHelper';
 
+// context to hold and pass user information
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {

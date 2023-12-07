@@ -12,6 +12,8 @@ import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import UnhandledError from './components/UnhandledError';
 import PrivateRoute from './components/PrivateRoute';
+import NotFound from './components/NotFound';
+import Forbidden from './components/Forbidden';
 
 function App() {
   return (
@@ -27,23 +29,13 @@ function App() {
         <Route path="/courses/create" element={<CreateCourse />} />
         <Route path="/courses/:id/update" element={<UpdateCourse />} />
       </Route>
+      <Route path="/notfound" element={<NotFound />} />
+      <Route path="/forbidden" element={<Forbidden />} />
       <Route path="/error" element={<UnhandledError />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
     </>
   );
 }
 
 export default App;
-
-
-//TODO:
-// configure protected routes for /courses/create and /courses/:id/update
-// restrict access to updating and deleting courses
-// add validation errors
-// add support for rendering markdown formatted text
-
-//NOTES:
-// after successfully validating the user's credentials, persist the user record
-// and user password in the global state (using context for this)
-// this will allow for adding the appropriate authorization header on future
-// REST API requests that require authentication

@@ -4,21 +4,24 @@ import UserContext from '../context/UserContext';
 import { apiHelper } from '../utils/apiHelper';
 import ErrorsDisplay from './ErrorsDisplay';
 
+// component to render user sign up form
 const UserSignUp = () => {
     const navigate = useNavigate();
     const { actions } = useContext(UserContext);
+    const [errors, setErrors] = useState([]);
 
+    // ref values
     const firstName = useRef(null);
     const lastName = useRef(null);
     const emailAddress = useRef(null);
     const password = useRef(null);
 
-    const [errors, setErrors] = useState([]);
 
     // event handlers
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
+        // generate request body
         const user = {
             firstName: firstName.current.value,
             lastName: lastName.current.value,
@@ -26,8 +29,8 @@ const UserSignUp = () => {
             password: password.current.value
         }
 
-        const response = await apiHelper('/users', 'POST', user);
         try {
+            const response = await apiHelper('/users', 'POST', user);
             if (response.status === 201) {
                 console.log(`${user.firstName} is successfully signed up and authenticated.`);
                 await actions.signIn(user);

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import UserContext from "../context/UserContext";
 
+// navigation bar header component
 const Header = () => {
     const { authUser } = useContext(UserContext);
 
@@ -16,7 +17,7 @@ const Header = () => {
                 </ul>
                 :
                 <ul className="header--signedin">
-                    <span>Welcome, {authUser.firstName}!</span>
+                    <span>Welcome, {authUser.firstName}! </span>
                     <Link to="/signout">Sign Out</Link>
                 </ul>
             }
