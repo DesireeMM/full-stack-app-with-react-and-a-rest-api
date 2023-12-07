@@ -1,11 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { apiHelper } from '../utils/apiHelper';
+import UserContext from '../context/UserContext';
 
 const CourseDetail = () => {
     const { id } = useParams();
     const [course, setCourse] = useState(null);
     const navigate = useNavigate();
+    const { authUser } = useContext(UserContext);
 
     useEffect(() => {
         const fetchCourse = async (id) => {
@@ -27,11 +29,11 @@ const CourseDetail = () => {
     const handleDelete = async (evt) => {
         evt.preventDefault();
 
-        const response = await apiHelper(`/courses/${id}`, "DELETE");
+        const response = await apiHelper(`/courses/${id}`, "DELETE", null, authUser);
         try {
             if (response.status === 204) {
                 console.log(`${course.title} was successfully deleted.`);
-                navigate('/courses');
+                navigate('/');
             } else {
                 throw new Error()
             }
@@ -57,6 +59,7 @@ const CourseDetail = () => {
                         <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
+                        <p>By {authUser.firstName} {authUser.lastName}</p>
                         <p>{course.description}</p>
                     </div>
                         <div>

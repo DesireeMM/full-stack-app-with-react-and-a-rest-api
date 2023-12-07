@@ -23,16 +23,17 @@ const CreateCourse = () => {
             description: courseDescription.current.value,
             estimatedTime: estimatedTime.current.value,
             materialsNeeded: materialsNeeded.current.value,
-            // userId: authUser.id
+            userId: authUser.id
         }
 
-        const response = await apiHelper(`/courses`, 'POST', courseBody)
-            .then(response => response.json());
+        const response = await apiHelper(`/courses`, 'POST', courseBody, authUser)
+
+        console.log(response);
 
         try {
             if (response.status === 201) {
                 console.log(`${courseTitle.current.value} has been successfully created.`);
-                navigate(`/courses/${response.id}`)
+                navigate("/")
             } else if (response.status === 400) {
                 const data = await response.json();
                 setErrors(data.errors);
@@ -66,7 +67,7 @@ const CreateCourse = () => {
                             <label htmlFor="courseTitle">Course Title</label>
                             <input id="courseTitle" name="courseTitle" type="text" ref={courseTitle} />
 
-                            {/* <p>By {authUser.firstName}</p> */}
+                            <p>By {authUser.firstName} {authUser.lastName}</p>
 
                             <label htmlFor="courseDescription">Course Description</label>
                             <textarea id="courseDescription" name="courseDescription" ref={courseDescription}></textarea>
@@ -79,7 +80,7 @@ const CreateCourse = () => {
                             <textarea id="materialsNeeded" name="materialsNeeded" ref={materialsNeeded}></textarea>
                         </div>
                     </div>
-                    <button class="button" type="submit">Create Course</button><button class="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    <button className="button" type="submit">Create Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 </form>
             </div>
     );

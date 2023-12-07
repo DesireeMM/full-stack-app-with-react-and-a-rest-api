@@ -10,6 +10,7 @@ import UserSignOut from './components/UserSignOut';
 import UserSignUp from './components/UserSignUp';
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
+import UnhandledError from './components/UnhandledError';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
       <Route path="/signup" element={<UserSignUp />} />
       <Route path="/signin" element={<UserSignIn />} />
       <Route path="/signout" element={<UserSignOut />} />
+      <Route path="/error" element={<UnhandledError />} />
     </Routes>
     </>
   );

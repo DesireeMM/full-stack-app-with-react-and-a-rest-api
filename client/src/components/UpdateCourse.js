@@ -10,6 +10,11 @@ const UpdateCourse = () => {
     const [errors, setErrors] = useState([]);
     const navigate = useNavigate();
 
+    // ref values
+    const courseTitle = useRef(null);
+    const courseDescription = useRef(null);
+    const estimatedTime = useRef(null);
+    const materialsNeeded = useRef(null);
     
     useEffect(() => {
         const fetchCourse = async (id) => {
@@ -20,25 +25,20 @@ const UpdateCourse = () => {
         fetchCourse(id);
     }, []);
     
-    // ref values
-    const courseTitle = useRef(course.title);
-    const courseDescription = useRef(course.description);
-    const estimatedTime = useRef(course.estimatedTime);
-    const materialsNeeded = useRef(course.materialsNeeded);
     
     // event handlers
     const handleSubmit = async (evt) => {
         evt.preventDefault();
 
         const courseBody = {
-            title: courseTitle,
-            description: courseDescription,
-            estimatedTime,
-            materialsNeeded,
+            title: courseTitle.current.value,
+            description: courseDescription.current.value,
+            estimatedTime: estimatedTime.current.value,
+            materialsNeeded: materialsNeeded.current.value,
             userId: authUser.id
         }
 
-        const response = await apiHelper(`/courses/${id}`, "PUT", courseBody)
+        const response = await apiHelper(`/courses/${id}`, "PUT", courseBody, authUser)
         try {
             if (response.status === 204) {
                 console.log(`${course.title} has been updated successfully.`);
@@ -69,19 +69,19 @@ const UpdateCourse = () => {
                     <div className="main--flex">
                         <div>
                             <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" ref={courseTitle} />
+                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course?.title} ref={courseTitle} />
 
-                            {/* <p>By {authUser.firstName}</p> */}
+                            <p>By {authUser.firstName} {authUser.lastName}</p>
 
                             <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" ref={courseDescription}></textarea>
+                            <textarea id="courseDescription" name="courseDescription" defaultValue={course?.description} ref={courseDescription}></textarea>
                         </div>
                         <div>
                             <label htmlFor="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" ref={estimatedTime} />
+                            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course?.estimatedTime} ref={estimatedTime} />
 
                             <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" ref={materialsNeeded}></textarea>
+                            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course?.materialsNeeded} ref={materialsNeeded}></textarea>
                         </div>
                     </div>
                     <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
