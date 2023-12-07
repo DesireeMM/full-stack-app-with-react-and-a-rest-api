@@ -2,6 +2,7 @@ import { useRef, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { apiHelper } from '../utils/apiHelper';
+import ErrorsDisplay from './ErrorsDisplay';
 
 const CreateCourse = () => {
     const { authUser } = useContext(UserContext);
@@ -54,13 +55,7 @@ const CreateCourse = () => {
     return (
         <div className="wrap">
                 <h2>Create Course</h2>
-                {/* <div className="validation--errors">
-                    <h3>Validation Errors</h3>
-                    <ul>
-                        <li>Please provide a value for "Title"</li>
-                        <li>Please provide a value for "Description"</li>
-                    </ul>
-                </div> */}
+                <ErrorsDisplay errors={errors} />
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>

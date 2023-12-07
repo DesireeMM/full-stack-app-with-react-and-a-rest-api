@@ -136,6 +136,7 @@ router.post('/courses', authenticateUser, asyncHandler( async(req, res) => {
 router.put('/courses/:id', authenticateUser, async(req, res) => {
     const user = req.currentUser;
     const course = await Course.findByPk(req.params.id);
+    try {
     if (course && course.userId === user.id) {
         await course.update(req.body);
         res.status(204).end();
@@ -145,6 +146,12 @@ router.put('/courses/:id', authenticateUser, async(req, res) => {
         const error = new Error('Course not found.');
         res.status(404).json({error: error.message});
     }
+} catch (error) {
+    if (error.name === 'SequelizeValidationError') {
+        const errors = error.errors.map(err => err.message);
+        res.status(400).json({errors});
+    }
+}
 });
 
 // Route to delete a specific course

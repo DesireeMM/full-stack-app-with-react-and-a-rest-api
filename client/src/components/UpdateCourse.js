@@ -2,6 +2,7 @@ import { useRef, useContext, useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { apiHelper } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
+import ErrorsDisplay from './ErrorsDisplay';
 
 const UpdateCourse = () => {
     const { id } = useParams();
@@ -65,6 +66,7 @@ const UpdateCourse = () => {
         return (
             <div className="wrap">
                 <h2>Update Course</h2>
+                <ErrorsDisplay errors={errors} />
                 <form onSubmit={handleSubmit}>
                     <div className="main--flex">
                         <div>

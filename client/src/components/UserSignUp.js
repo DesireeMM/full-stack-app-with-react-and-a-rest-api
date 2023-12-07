@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserContext';
 import { apiHelper } from '../utils/apiHelper';
+import ErrorsDisplay from './ErrorsDisplay';
 
 const UserSignUp = () => {
     const navigate = useNavigate();
@@ -51,7 +52,7 @@ const UserSignUp = () => {
     return (
         <div className="form--centered">
                 <h2>Sign Up</h2>
-                
+                <ErrorsDisplay errors={errors} />
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="firstName">First Name</label>
                     <input id="firstName" name="firstName" type="text" ref={firstName} />
