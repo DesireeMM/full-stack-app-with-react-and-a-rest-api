@@ -40,7 +40,7 @@ const UpdateCourse = () => {
         }
         fetchCourse(id);
 
-    }, []);
+    }, [authUser.id, id, navigate]);
     
     
     // event handlers

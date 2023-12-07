@@ -30,7 +30,7 @@ const CourseDetail = () => {
             }
         }
         fetchCourse();
-    }, []);
+    }, [id, navigate]);
 
     // handles user deleting an owned course
     const handleDelete = async (evt) => {
