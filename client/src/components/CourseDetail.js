@@ -57,7 +57,7 @@ const CourseDetail = () => {
     // if a course has been fetched, render component
     if (course) {
         return (
-            <>
+            <main>
                 <div className="actions--bar">
                     <div className="wrap">
                         { authUser && authUser.id === course.owner.id ? 
@@ -102,7 +102,7 @@ const CourseDetail = () => {
                     </div>
                     </form>
                 </div>
-            </>
+            </main>
         );
     }
     

@@ -16,7 +16,7 @@ const UpdateCourse = () => {
     const courseDescription = useRef(null);
     const estimatedTime = useRef(null);
     const materialsNeeded = useRef(null);
-    
+
     useEffect(() => {
         const fetchCourse = async (id) => {
             try {
@@ -41,8 +41,8 @@ const UpdateCourse = () => {
         fetchCourse(id);
 
     }, [authUser.id, id, navigate]);
-    
-    
+
+
     // event handlers
     const handleSubmit = async (evt) => {
         evt.preventDefault();
@@ -84,31 +84,33 @@ const UpdateCourse = () => {
 
     if (course) {
         return (
-            <div className="wrap">
-                <h2>Update Course</h2>
-                <ErrorsDisplay errors={errors} />
-                <form onSubmit={handleSubmit}>
-                    <div className="main--flex">
-                        <div>
-                            <label htmlFor="courseTitle">Course Title</label>
-                            <input id="courseTitle" name="courseTitle" type="text" defaultValue={course?.title} ref={courseTitle} />
+            <main>
+                <div className="wrap">
+                    <h2>Update Course</h2>
+                    <ErrorsDisplay errors={errors} />
+                    <form onSubmit={handleSubmit}>
+                        <div className="main--flex">
+                            <div>
+                                <label htmlFor="courseTitle">Course Title</label>
+                                <input id="courseTitle" name="courseTitle" type="text" defaultValue={course?.title} ref={courseTitle} />
 
-                            <p>By {course.owner.firstName} {course.owner.lastName}</p>
+                                <p>By {course.owner.firstName} {course.owner.lastName}</p>
 
-                            <label htmlFor="courseDescription">Course Description</label>
-                            <textarea id="courseDescription" name="courseDescription" defaultValue={course?.description} ref={courseDescription}></textarea>
+                                <label htmlFor="courseDescription">Course Description</label>
+                                <textarea id="courseDescription" name="courseDescription" defaultValue={course?.description} ref={courseDescription}></textarea>
+                            </div>
+                            <div>
+                                <label htmlFor="estimatedTime">Estimated Time</label>
+                                <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course?.estimatedTime} ref={estimatedTime} />
+
+                                <label htmlFor="materialsNeeded">Materials Needed</label>
+                                <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course?.materialsNeeded} ref={materialsNeeded}></textarea>
+                            </div>
                         </div>
-                        <div>
-                            <label htmlFor="estimatedTime">Estimated Time</label>
-                            <input id="estimatedTime" name="estimatedTime" type="text" defaultValue={course?.estimatedTime} ref={estimatedTime} />
-
-                            <label htmlFor="materialsNeeded">Materials Needed</label>
-                            <textarea id="materialsNeeded" name="materialsNeeded" defaultValue={course?.materialsNeeded} ref={materialsNeeded}></textarea>
-                        </div>
-                    </div>
-                    <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
-                </form>
-            </div>
+                        <button className="button" type="submit">Update Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
+                    </form>
+                </div>
+            </main>
         );
     }
 

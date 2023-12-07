@@ -52,7 +52,8 @@ const CreateCourse = () => {
     };
 
     return (
-        <div className="wrap">
+        <main>
+            <div className="wrap">
                 <h2>Create Course</h2>
                 <ErrorsDisplay errors={errors} />
                 <form onSubmit={handleSubmit}>
@@ -77,6 +78,7 @@ const CreateCourse = () => {
                     <button className="button" type="submit">Create Course</button><button className="button button-secondary" onClick={handleCancel}>Cancel</button>
                 </form>
             </div>
+        </main>
     );
 };
 
