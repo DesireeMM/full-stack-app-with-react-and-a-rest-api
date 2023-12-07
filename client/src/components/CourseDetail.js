@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { apiHelper } from '../utils/apiHelper';
 import UserContext from '../context/UserContext';
+import Markdown from 'react-markdown';
 
 const CourseDetail = () => {
     const { id } = useParams();
@@ -17,14 +18,6 @@ const CourseDetail = () => {
         }
         fetchCourse(id);
     }, []);
-
-    // let courseMaterialsList;
-
-    // if (course.materialsNeeded) {
-    //     const materialsList = course.materialsNeeded;
-    //     console.log(typeof materialsList)
-    //     // courseMaterialsList = materialsList.map(material => <li>{material}</li>);
-    // }
 
     const handleDelete = async (evt) => {
         evt.preventDefault();
@@ -66,7 +59,7 @@ const CourseDetail = () => {
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{course.title}</h4>
                         <p>By {course.owner.firstName} {course.owner.lastName}</p>
-                        <p>{course.description}</p>
+                        <Markdown>{course.description}</Markdown>
                     </div>
                         <div>
                         {course.estimatedTime ?
@@ -80,7 +73,9 @@ const CourseDetail = () => {
                         {course.materialsNeeded ?
                             <>
                                 <h3 className="course--detail--title">Materials Needed</h3>
-                                {/* <ul className="course--detail--list">{courseMaterialsList}</ul> */}
+                                <ul className="course--detail--list">
+                                    <Markdown>{course.materialsNeeded}</Markdown>
+                                </ul>
                             </>
                             :
                             <></>
