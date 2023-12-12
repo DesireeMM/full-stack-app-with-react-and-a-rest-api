@@ -22,7 +22,7 @@ This project involved creating the client side of a full stack application repre
 ##### REST API
 - JavaScript
   - Express
-    - [cors] (https://expressjs.com/en/resources/middleware/cors.html)
+    - [cors](https://expressjs.com/en/resources/middleware/cors.html)
     - [bcrypt](https://www.npmjs.com/package/bcrypt)
 - Sequelize
 - SQLite
